@@ -1,0 +1,42 @@
+name: Weekly arXiv Digest
+
+on:
+  schedule:
+    # Run every Monday at 12:00 PM UTC
+    - cron: "0 12 * * 1"
+  workflow_dispatch: # Allows manual triggering for testing
+
+jobs:
+  generate-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai feedparser nltk scikit-learn markdown
+          python -c "import nltk; nltk.download('punkt', quiet=True); nltk.download('stopwords', quiet=True); nltk.download('wordnet', quiet=True)"
+
+      - name: Generate arXiv digest
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+        run: python arxiv_digest.py
+
+      - name: Commit and push if digest changed
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add arxiv_digest.md
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generated arXiv digest for $(date +'%Y-%m-%d')"
+          git push
