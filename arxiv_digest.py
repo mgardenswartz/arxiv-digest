@@ -12,6 +12,18 @@ from email.mime.text import MIMEText
 import feedparser
 import markdown
 import nltk
+
+try:
+    # Try to tokenize a test sentence
+    from nltk.tokenize import word_tokenize
+
+    word_tokenize("Test sentence")
+except LookupError:
+    # If resources are missing, download them
+    nltk.download("punkt")
+    nltk.download("stopwords")
+    nltk.download("wordnet")
+
 import openai
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
