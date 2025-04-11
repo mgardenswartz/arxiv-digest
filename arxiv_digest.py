@@ -20,7 +20,7 @@ try:
     word_tokenize("Test sentence")
 except LookupError:
     # If resources are missing, download them
-    nltk.download("punkt")
+    nltk.download("punkt_tab")
     nltk.download("stopwords")
     nltk.download("wordnet")
 
@@ -30,11 +30,6 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
-# Download NLTK resources
-nltk.download("punkt", quiet=True)
-nltk.download("stopwords", quiet=True)
-nltk.download("wordnet", quiet=True)
 
 # OpenAI API configuration
 OPENAI_CONFIG = {
