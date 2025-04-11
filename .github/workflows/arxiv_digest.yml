@@ -32,11 +32,3 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
         run: python arxiv_digest.py
-
-      - name: Commit and push if digest changed
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add arxiv_digest.md
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generated arXiv digest for $(date +'%Y-%m-%d')"
-          git push
