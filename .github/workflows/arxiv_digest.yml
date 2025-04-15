@@ -3,7 +3,7 @@ name: Weekly arXiv Digest
 on:
   schedule:
     # Run every Monday at 12:00 PM UTC
-    - cron: "0 12 * * 1"
+    - cron: "0 8 * * 1"
   workflow_dispatch: # Allows manual triggering for testing
 
 jobs:
