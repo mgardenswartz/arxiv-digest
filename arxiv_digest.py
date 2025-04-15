@@ -35,7 +35,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 OPENAI_CONFIG = {
     "api_key": os.environ.get("OPENAI_API_KEY"),
     "model": "gpt-4o-mini",
-    "use_ai_summaries": True,
+    "use_ai_summaries": False,
 }
 
 # Email configuration
